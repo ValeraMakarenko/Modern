@@ -24,7 +24,9 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public void updateCount(Long idAnswer) {
-        answerDao.updateCount(idAnswer);
+    public void updateCount(List<Long> idAnswerList) {
+        for (Long idAnswer : idAnswerList) {
+            answerDao.updateCount(idAnswer);
+        }
     }
 }

@@ -29,7 +29,7 @@ public class Answer {
 
     @PrePersist
     public void prePersist() {
-        if(count == null)
+        if (count == null)
             count = 0L;
     }
 }
