@@ -26,4 +26,10 @@ public class Answer {
     @JoinColumn(name = "fk_id_question")
     @JsonIgnore
     private Question question;
+
+    @PrePersist
+    public void prePersist() {
+        if(count == null)
+            count = 0L;
+    }
 }

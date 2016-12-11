@@ -26,9 +26,4 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return questions;
     }
-
-    @Override
-    public void updateQuestionCount() {
-        questionDao.updateQuestionCount();
-    }
 }

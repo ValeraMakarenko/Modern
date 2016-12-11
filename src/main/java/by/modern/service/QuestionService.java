@@ -6,6 +6,4 @@ import java.util.List;
 
 public interface QuestionService {
     List<Question> addQuestionList(List<Question> questions);
-
-    void updateQuestionCount();
 }

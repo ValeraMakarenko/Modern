@@ -1,11 +1,13 @@
 package by.modern.service.impl;
 
+import by.modern.dao.AnswerDao;
 import by.modern.dao.StatusDao;
 import by.modern.dao.VotingDao;
 import by.modern.domain.Answer;
 import by.modern.domain.Question;
 import by.modern.domain.Status;
 import by.modern.domain.Voting;
+import by.modern.service.AnswerService;
 import by.modern.service.QuestionService;
 import by.modern.service.VotingService;
 import by.modern.utils.StringUtils;
@@ -26,6 +28,10 @@ public class VotingServiceImpl implements VotingService {
     private VotingDao votingDao;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private AnswerService answerService;
+    @Autowired
+    private AnswerDao answerDao;
 
     @Override
     public Voting getVoting() {
@@ -36,8 +42,17 @@ public class VotingServiceImpl implements VotingService {
     public Voting addVoting(Voting voting) {
         Voting save = votingDao.save(voting);
         questionService.addQuestionList(voting.getQuestionList());
-        questionService.updateQuestionCount();
+        answerDao.updateCount(1L);
+
+        sdfads();
+        List<Voting> all = votingDao.findAll();
+        Voting voting1 = all.get(0);
+        Voting votingByLinkAndStatus = findVotingByLinkAndStatus(voting1.getLink(), voting1.getStatus());
         return save;
+    }
+
+    private void sdfads() {
+        votingDao.closeVoting(1L);
     }
 
     @Override
@@ -46,11 +61,24 @@ public class VotingServiceImpl implements VotingService {
         Voting votingByLink = votingDao.findVotingByLink(link);
         if (1 == votingByLink.getStatus().getIdStatus()) {
             return votingByLink;
-        }
-        else {
+        } else {
             return null; //////error!!!!!!!!!!!!!!
             //можно просто вернуть вотинг и в контролле забахать стринг мол иксепшн
         }
+    }
+
+    @Override
+    public Voting findVotingByLinkAndStatus(String link, Status status) {
+        return votingDao.findVotingByLinkAndStatus(link, getOpenStatus());
+    }
+
+    @Override
+    public void closeVoting(Long idVoting) {
+        votingDao.closeVoting(idVoting);
+    }
+
+    private Status getOpenStatus() {
+        return statusDao.findOne(1L);
     }
 
     private List<String> getAllLinks() {

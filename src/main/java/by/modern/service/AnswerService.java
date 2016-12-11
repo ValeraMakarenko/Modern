@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface AnswerService {
     List<Answer> addAnswerList(List<Answer> answers);
+
+    void updateCount(Long idAnswer);
 }

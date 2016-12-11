@@ -22,4 +22,9 @@ public class AnswerServiceImpl implements AnswerService {
         }
         return answers;
     }
+
+    @Override
+    public void updateCount(Long idAnswer) {
+        answerDao.updateCount(idAnswer);
+    }
 }
